@@ -3,13 +3,15 @@
 # based on: http://blog.kagesenshi.org/2007/06/fedora-repository-mirroring-script.html
 
 # mirror root - the place you want the rpms to be downloaded
-MROOT="/opt/storage/repository"
+#MROOT="/opt/storage/repository"
 
 # processor architectures (space separated)
-ARCHS="x86_64"
+#ARCHS="x86_64"
 
 # repository names (space separated)
-REPOS="epel nginx rhel-x86_64-server-6 rhel-x86_64-server-ha-6 rhel-x86_64-server-optional-6 rhel-x86_64-server-rs-6 vmware-tools newrelic"
+#REPOS="epel nginx rhel-x86_64-server-6 rhel-x86_64-server-ha-6 rhel-x86_64-server-optional-6 rhel-x86_64-server-rs-6 vmware-tools newrelic"
+
+source /etc/rpm-repository-mirroring.conf
 
 downrepo () {
     cd $MROOT
