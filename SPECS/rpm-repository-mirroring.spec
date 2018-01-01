@@ -5,10 +5,10 @@ Version: 0.1
 #Release: 1%{?dist}
 Release: 1
 Summary: RPM repository mirroring script using reposync
-
 Group:   Development Tools
 License: ASL 2.0
 Source0: rpm-repository-mirroring.sh
+Requires: nginx
 
 %description
 
