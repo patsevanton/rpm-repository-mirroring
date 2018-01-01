@@ -14,6 +14,7 @@ Source0: rpm-repository-mirroring.sh
 
 %install
 rm -rf $RPM_BUILD_ROOT
+ls -1
 mkdir -p %{buildroot}/%{_bindir}
 %{__install} -m 755 %{SOURCE0} %{buildroot}/%{_bindir}/%{name}
 

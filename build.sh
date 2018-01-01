@@ -10,10 +10,5 @@ do
     fi
 done
 
-rm -rf ~/rpmbuild/
-mkdir -p ~/rpmbuild/{RPMS,SRPMS,BUILD,SOURCES,SPECS}
-cd SOURCES
-cp delete-old-puppet-config.sh ~/rpmbuild/SOURCES
-cd ..
-spectool -g -R delete-old-puppet-config.spec
-rpmbuild -bb delete-old-puppet-config.spec
+spectool -g -R SPECS/rpm-repository-mirroring.spec
+rpmbuild -bb --define "_topdir $PWD" SPECS/rpm-repository-mirroring.spec
