@@ -7,7 +7,7 @@ source /etc/rpm-repository-mirroring.conf
 downrepo () {
     cd $MROOT
     echo "Sychronizing Repositories"
-    reposync --download-metadata --gpgcheck --plugins --repoid=$1 --arch=$2 --newest-only -t /var/tmp/reposync-cache
+    reposync --download-metadata --gpgcheck --plugins --repoid=$1 --arch=$2 --newest-only -t /tmp/reposync-cache
     STAT=$?
     if [ "$STAT" == "0" ];then
         cd $1
@@ -25,7 +25,7 @@ downrepo () {
 
         if [ -f *-updateinfo.xml.gz ]; then
                 zcat *-updateinfo.xml.gz > updateinfo.xml
-                modifyrepo updateinfo.xml ./repodata/	
+                modifyrepo updateinfo.xml ./repodata/
                 rm *-updateinfo.xml.gz
         fi
     fi

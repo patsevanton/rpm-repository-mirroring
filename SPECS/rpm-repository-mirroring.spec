@@ -2,13 +2,12 @@
 
 Name:    rpm-repository-mirroring
 Version: 0.1
-Release: 1%{?dist}
-#Release: 1
+Release: 1
 Summary: RPM repository mirroring script using reposync
 Group:   Development Tools
 License: ASL 2.0
 Source0: rpm-repository-mirroring.sh
-Source1: mrepo.conf
+Source1: nginx-rpm-repository-mirroring.conf
 Source2: rpm-repository-mirroring.conf
 Requires: nginx
 Requires: createrepo
@@ -26,6 +25,6 @@ mkdir -p %{buildroot}/var/www/repos
 
 %files
 %{_bindir}/%{name}
-/etc/nginx/conf.d/mrepo.conf
+/etc/nginx/conf.d/nginx-rpm-repository-mirroring.conf
 /etc/rpm-repository-mirroring.conf
 %dir /var/www/repos
