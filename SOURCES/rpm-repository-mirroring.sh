@@ -2,6 +2,8 @@
 
 # based on: http://blog.kagesenshi.org/2007/06/fedora-repository-mirroring-script.html
 
+yum -y makecache
+
 source /etc/rpm-repository-mirroring.conf
 
 downrepo () {
