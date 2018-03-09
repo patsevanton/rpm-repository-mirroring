@@ -13,9 +13,9 @@ downrepo () {
     STAT=$?
     if [ "$STAT" == "0" ];then
         cd $1
-        echo "Cleaning old packages"
+        #echo "Cleaning old packages"
         # dont delete old kernels
-        repomanage --old . | grep -v 'kernel\-' | xargs rm -rf
+        #repomanage --old . | grep -v 'kernel\-' | xargs rm -rf
         echo "Recreating repodata"
         if [ -f comps.xml ]; then
                 echo "comps.xml found"
