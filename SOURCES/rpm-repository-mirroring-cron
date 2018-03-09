@@ -1,1 +1,1 @@
-45 2 * * * root /usr/loca/bin/rpm-repository-mirroring
+45 2 * * * root /usr/local/bin/rpm-repository-mirroring
