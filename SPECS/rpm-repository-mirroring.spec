@@ -2,7 +2,7 @@
 
 Name:    rpm-repository-mirroring
 Version: 0.3
-Release: 1
+Release: 2
 Summary: RPM repository mirroring script using reposync
 Group:   Development Tools
 License: ASL 2.0
