@@ -25,6 +25,7 @@ cp -a %{SOURCE2} %{buildroot}/etc/
 mkdir -p %{buildroot}/etc/cron.d/
 cp -a %{SOURCE3} %{buildroot}/etc/cron.d/
 mkdir -p %{buildroot}/var/www/repos
+mkdir -p %{buildroot}/var/cache/rpm-repository-mirroring
 
 %files
 %{_bindir}/%{name}
@@ -32,3 +33,5 @@ mkdir -p %{buildroot}/var/www/repos
 /etc/rpm-repository-mirroring.conf
 /etc/cron.d/rpm-repository-mirroring-cron
 %dir /var/www/repos
+%dir /var/cache/rpm-repository-mirroring
+
