@@ -9,7 +9,7 @@ source /etc/rpm-repository-mirroring.conf
 downrepo () {
     cd $MROOT
     echo "Sychronizing Repositories"
-    reposync --download-metadata --tempcache --plugins --repoid=$1 --arch=$2 --allow-path-traversal
+    reposync --download-metadata --cachedir=/var/cache/rpm-repository-mirroring --plugins --repoid=$1 --arch=$2 --allow-path-traversal
     STAT=$?
     echo $1
     if [[ $1 == *"kubernetes"* ]]; then
