@@ -21,7 +21,7 @@ downrepo () {
     fi
     if [ "$STAT" == "0" ];then
         cd $1
-        repomanage --keep=5 --old . |  xargs rm -rf
+        repomanage --keep=20 --old . |  xargs rm -rf
         echo "Recreating repodata"
         if [ -f comps.xml ]; then
                 echo "comps.xml found"
