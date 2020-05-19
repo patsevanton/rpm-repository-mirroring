@@ -34,7 +34,7 @@ def get_dict_uniq_package_in_repo():
 					if package not in list_uniq_packages_custom_repo:
 						list_uniq_packages_custom_repo.append(package)
 		if repo not in dict_uniq_package_in_all_repo:
-			d[repo] = dict_uniq_package_in_all_repo
+			dict_uniq_package_in_all_repo[repo] = list_uniq_packages_custom_repo
 	return dict_uniq_package_in_all_repo
 
 # def get_dict_version_for_package(package, begin_version_package_at_repo,last_version_specific_package):
