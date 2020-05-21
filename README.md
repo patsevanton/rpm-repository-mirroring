@@ -9,6 +9,8 @@ After install change:
 2) REPOS in /etc/rpm-repository-mirroring.conf
 3) run rpm-repository-mirroring manual
 
+# Новый скрипт на Python rpm-repository-mirroring.py
+
 rpm-repository-mirroring.py делает словарь где ключ является репозиторием, а значение явлется словать, у которрого ключ является название пакета, а значение является список последних доступных версий.
 
 Для репозиториев kubernetes и grafana нужно добавить их репозитории:
