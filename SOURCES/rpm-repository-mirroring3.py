@@ -6,18 +6,25 @@ import yum
 
 config = "rpm-repository-mirroring.conf"
 
-with open('conf.json') as data_file:    
-    name_count = json.load(data_file)
 
 def get_list_repo(config):
-	with open(config) as f:
+	with open(config, "r") as f:
 		for line in f:
 			if "REPOS" in line:
 				fields = line.strip().split("=")
 				list_repo=fields[1][1:-1].split()
 				return list_repo
 
+def get_dict_cut(config):
+	with open(config, "r") as f:
+		for line in f:
+			if "CUT_AFTER" in line:
+				fields = line.strip().split("=")
+				name_count=json.loads(fields[1])
+				return name_count
 
+
+name_count = get_dict_cut(config)
 repo_name_ver = {}
 for repo in get_list_repo(config):
 	yb = yum.YumBase()
