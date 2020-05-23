@@ -3,6 +3,7 @@
 import json
 import sys
 import yum
+from distutils.version import LooseVersion
 
 config = "rpm-repository-mirroring.conf"
 
@@ -12,7 +13,7 @@ def get_list_repo(config):
 		for line in f:
 			if "REPOS" in line:
 				fields = line.strip().split("=")
-				list_repo=fields[1][1:-1].split()
+				list_repo=json.loads(fields[1])
 				return list_repo
 
 def get_dict_cut(config):
@@ -54,9 +55,11 @@ for repo in get_list_repo(config):
 				ignore = True
 		else:
 			if pkg.name in repo_name_ver[repo]:
-				repo_name_ver[repo][pkg.name].append(pkg.version + '-' + pkg.release)
+				if LooseVersion(pkg.version) >= LooseVersion(get_list_repo(config)[repo]):
+					repo_name_ver[repo][pkg.name].append(pkg.version + '-' + pkg.release)
 			else:
-				repo_name_ver[repo][pkg.name] = [pkg.version + '-' + pkg.release]
+				if LooseVersion(pkg.version) >= LooseVersion(get_list_repo(config)[repo]):
+					repo_name_ver[repo][pkg.name] = [pkg.version + '-' + pkg.release]
 		prev_name = pkg.name
 
 
@@ -70,3 +73,4 @@ def pretty(d, indent=0):
 
 pretty(repo_name_ver)
 #print repo_name_ver
+
