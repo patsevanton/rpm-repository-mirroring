@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
+import json
 import sys
 import yum
 
 config = "rpm-repository-mirroring.conf"
-name_count = {'rkt':5,'kubernetes-cni':5,'cri-tools':5}
 
+with open('conf.json') as data_file:    
+    name_count = json.load(data_file)
 
 def get_list_repo(config):
 	with open(config) as f:
@@ -14,6 +16,7 @@ def get_list_repo(config):
 				fields = line.strip().split("=")
 				list_repo=fields[1][1:-1].split()
 				return list_repo
+
 
 repo_name_ver = {}
 for repo in get_list_repo(config):
@@ -25,23 +28,30 @@ for repo in get_list_repo(config):
 	yb.repos.disableRepo('*')
 	yb.repos.enableRepo(repo)
 	repo_name_ver[repo] = {}
-	for pkg in sorted(yb.pkgSack.returnPackages()):
+	ignore = False
+	prev_name = None
+	for pkg in sorted(yb.pkgSack.returnPackages(), reverse=True):
+		if ignore == True and prev_name == pkg.name:
+			continue
+		if prev_name != pkg.name:
+			ignore = False
 		if pkg.name in name_count:
-#			i = 0
-			for num in range(0, int(name_count[pkg.name])):
-#				print pkg
-#				i += 1
-#				print i
+			if name_count[pkg.name] > 0:
 				if pkg.name in repo_name_ver[repo]:
 					repo_name_ver[repo][pkg.name].append(pkg.version + '-' + pkg.release)
 				else:
 					repo_name_ver[repo][pkg.name] = [pkg.version +  '-' + pkg.release]
-				break
+				name_count[pkg.name] -= 1
+			else:
+				name_count.pop(pkg.name, None)
+				ignore = True
 		else:
 			if pkg.name in repo_name_ver[repo]:
 				repo_name_ver[repo][pkg.name].append(pkg.version + '-' + pkg.release)
 			else:
 				repo_name_ver[repo][pkg.name] = [pkg.version + '-' + pkg.release]
+		prev_name = pkg.name
+
 
 def pretty(d, indent=0):
    for key, value in d.items():
