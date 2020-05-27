@@ -4,8 +4,18 @@ import json
 import sys
 import yum
 from distutils.version import LooseVersion
+from pprint import pprint
 
 config = "rpm-repository-mirroring.conf"
+
+
+def get_dir_to_download(config):
+	with open(config) as f:
+		for line in f:
+			if "DESTDIR" in line:
+				fields = line.strip().split("=")
+				dir_to_download=fields[1][1:-1].split()
+				return dir_to_download
 
 
 def get_list_repo(config):
@@ -71,6 +81,27 @@ def pretty(d, indent=0):
       else:
          print('\t' * (indent+1) + str(value))
 
-pretty(repo_name_ver)
-#print repo_name_ver
+def get_dict_of_list_package_for_download(dict):
+	dict_of_list_package_for_download = {}
+	for repo, int_dict in dict.items():
+		list_package_for_download = []
+		for package, list_version in int_dict.items():
+			for version in list_version:
+				list_package_for_download.append(package + '-' +  version)
+		dict_of_list_package_for_download[repo] = list_package_for_download
+	return dict_of_list_package_for_download
 
+
+def download_rpm_to_custom_dir(repo_name_ver):
+	dict_of_list_package_for_download = get_dict_of_list_package_for_download(repo_name_ver)
+	for repo in dict_of_list_package_for_download:
+		yb = yum.YumBase()
+		yb.downloadPkgs(dict_of_list_package_for_download[repo])
+
+
+
+#pretty(repo_name_ver)
+
+
+#print repo_name_ver
+download_rpm_to_custom_dir(repo_name_ver)
