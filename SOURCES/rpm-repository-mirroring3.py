@@ -92,16 +92,8 @@ def get_dict_of_list_package_for_download(dict):
 	return dict_of_list_package_for_download
 
 
-def download_rpm_to_custom_dir(repo_name_ver):
-	dict_of_list_package_for_download = get_dict_of_list_package_for_download(repo_name_ver)
-	for repo in dict_of_list_package_for_download:
-		yb = yum.YumBase()
-		yb.downloadPkgs(dict_of_list_package_for_download[repo])
-
-
-
 #pretty(repo_name_ver)
 
 
 #print repo_name_ver
-download_rpm_to_custom_dir(repo_name_ver)
+pprint(get_dict_of_list_package_for_download(repo_name_ver))
