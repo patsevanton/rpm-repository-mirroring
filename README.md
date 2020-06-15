@@ -1,10 +1,9 @@
-# rpm-repository-mirroring
-Новый скрипт на Python rpm-repository-mirroring.py
+# rpm-repository-mirroring - Скрипт для скачивания RPM пакетов из репозиториев, для которых нельзя сделать RPM зеркало
 
-rpm-repository-mirroring.py делает словарь где ключ является репозиторием, а значение является словать, у которого ключ является название пакета, а значение является список последних доступных версий.
+## Установка или создание репозиториев в директории yum.repos.d, откуда нужно скачивать RPM пакеты.
 
-Для репозиториев kubernetes и grafana нужно добавить их репозитории:
-
+Для примера будем использовать репозиторий Grafana.
+Создадим /etc/yum.repos.d/grafana.repo со следующим содержимым:
 ```
 [grafana]
 name=grafana
@@ -25,6 +24,14 @@ enabled=1
 gpgcheck=1
 repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+```
+
+# Установка и запуск
+```
+yum -y install yum-plugin-copr
+yum copr enable antonpatsev/rpm-repository-mirroring
+yum -y install rpm-repository-mirroring
+Run rpm-repository-mirroring in cron OR run rpm-repository-mirroring manual
 ```
 
 Диаграмма для репо kubernetes и grafana
