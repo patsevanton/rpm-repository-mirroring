@@ -16,6 +16,14 @@ sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 ```
 
+## Установка и запуск rpm-repository-mirroring
+```
+yum -y install yum-plugin-copr
+yum copr enable antonpatsev/rpm-repository-mirroring
+yum -y install rpm-repository-mirroring
+Run rpm-repository-mirroring in cron OR run rpm-repository-mirroring manual
+```
+
 ```
 [kubernetes]
 name=Kubernetes
@@ -26,13 +34,7 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 ```
 
-# Установка и запуск
-```
-yum -y install yum-plugin-copr
-yum copr enable antonpatsev/rpm-repository-mirroring
-yum -y install rpm-repository-mirroring
-Run rpm-repository-mirroring in cron OR run rpm-repository-mirroring manual
-```
+
 
 Диаграмма для репо kubernetes и grafana
 ![](https://habrastorage.org/webt/wd/8f/dj/wd8fdjxo6a-j1fevwuuiz8lkp4u.png)
