@@ -21,6 +21,14 @@ sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 yum -y install yum-plugin-copr
 yum copr enable antonpatsev/rpm-repository-mirroring
 yum -y install rpm-repository-mirroring
+```
+
+## Настройка rpm-repository-mirroring
+Редактируем файл "/etc/rpm-repository-mirroring.conf"
+В нем все подробно описано.
+
+Запускаем скрипт
+```
 rpm-repository-mirroring
 ```
 
