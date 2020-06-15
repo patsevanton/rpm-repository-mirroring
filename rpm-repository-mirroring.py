@@ -9,7 +9,7 @@ import yum
 import subprocess
 from distutils.version import LooseVersion
 
-config = "rpm-repository-mirroring.conf"
+config = "/etc/rpm-repository-mirroring.conf"
 
 def get_dict_repo(config):
 	with open(config, "r") as f:
