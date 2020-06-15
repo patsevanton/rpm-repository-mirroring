@@ -24,6 +24,8 @@ yum -y install rpm-repository-mirroring
 Run rpm-repository-mirroring in cron OR run rpm-repository-mirroring manual
 ```
 
+## После запуска скрипта в директории /var/www/repos должна появится директория grafana, содержащая rpm репозиторий.
+
 ```
 [kubernetes]
 name=Kubernetes
