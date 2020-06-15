@@ -16,8 +16,9 @@ sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 ```
 
-## Установка и запуск rpm-repository-mirroring
+## Установка и запуск rpm-repository-mirroring (epel-release нужен для nginx)
 ```
+yum install -y epel-release
 yum -y install yum-plugin-copr
 yum copr enable antonpatsev/rpm-repository-mirroring
 yum -y install rpm-repository-mirroring
