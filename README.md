@@ -21,7 +21,7 @@ sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 yum -y install yum-plugin-copr
 yum copr enable antonpatsev/rpm-repository-mirroring
 yum -y install rpm-repository-mirroring
-Run rpm-repository-mirroring in cron OR run rpm-repository-mirroring manual
+rpm-repository-mirroring
 ```
 
 ## После запуска скрипта в директории /var/www/repos должна появится директория grafana, содержащая rpm репозиторий.
