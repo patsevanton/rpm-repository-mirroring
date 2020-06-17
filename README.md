@@ -24,7 +24,7 @@ yum copr enable antonpatsev/rpm-repository-mirroring
 yum -y install rpm-repository-mirroring
 ```
 
-## Настройка rpm-repository-mirroring
+## Настройка rpm-repository-mirroring (пример с репозиторием grafana)
 Редактируем файл "/etc/rpm-repository-mirroring.conf"
 В нем все подробно описано.
 
