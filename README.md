@@ -25,7 +25,7 @@ yum -y install rpm-repository-mirroring
 ```
 
 ## Настройка rpm-repository-mirroring (пример с репозиторием grafana)
-Редактируем файл "/etc/rpm-repository-mirroring.conf"
+Редактируем файл `/etc/rpm-repository-mirroring.conf`
 В нем все подробно описано.
 
 Например, если мы хотим скачивать только rpm пакет из репозитория grafana, то конфиг будет такой:
