@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 # Программа для скачивания пакетов из yum-репозитория с определенными в конфиге условиями.
 #
@@ -17,7 +18,7 @@ import subprocess
 from distutils.version import LooseVersion
 
 # Имя конфига.
-config = "rpm-repository-mirroring.conf"
+config = "/etc/rpm-repository-mirroring.conf"
 
 # Получить словарь репозиторий->версия из конфига для условия, которое отсекает работу с версиями
 # ниже чем в данной настройке.
