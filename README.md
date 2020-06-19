@@ -27,7 +27,7 @@ sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 ```
 
-Например, если мы хотим скачивать только rpm пакет из репозитория grafana, то конфиг будет такой:
+Например, если мы хотим скачивать только rpm пакеты из репозитория grafana, то конфиг будет такой:
 ```
 # Директория, в которых будут создаваться rpm репозитории
 DOWNLOAD_DIR=/var/www/repos
@@ -55,6 +55,19 @@ enabled=1
 gpgcheck=1
 repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+```
+
+Если мы хотим скачивать только rpm пакеты из репозитория kubernetes, то конфиг будет такой:
+```
+# Директория, в которых будут создаваться rpm репозитории
+DOWNLOAD_DIR=/var/www/repos
+
+# репозитории, rpm которых будут скачиваться начиная с определенной версии, указаной в значении
+REPOS={"kubernetes":"1.17.6"}
+
+# Для всех репозиторией, в которых есть rpm-пакет, совпадающий с ключом, необходимо скачать последние N версии этих rpm пакетов.
+# Где N указываетя в значении.
+CUT_AFTER={"rkt":2,"kubernetes-cni":2,"cri-tools":2}
 ```
 
 Диаграмма для репо kubernetes и grafana
