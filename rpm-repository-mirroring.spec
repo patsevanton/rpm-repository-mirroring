@@ -2,7 +2,7 @@
 
 Name:    rpm-repository-mirroring
 Version: 0.5
-Release: 3
+Release: 4
 Summary: Script for download RPM
 Group:   Development Tools
 License: ASL 2.0
