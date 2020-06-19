@@ -123,8 +123,8 @@ for repo in repo_ver:
 		pkg.repo.cache = 0
 
 		# Если попали в имя, нужное второй настроке.
-		if pkg.name in name_count:
-			# Текущаяя глубина всё ещё существует.
+		if name_count is not None and pkg.name in name_count:
+			# Текущая глубина всё ещё существует.
 			if name_count[pkg.name] > 0:
 				# Добавится или инициализируется запись в глобальный словарь.
 				if pkg.name not in repo_name_ver[repo]:
