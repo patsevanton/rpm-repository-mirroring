@@ -55,6 +55,7 @@ enabled=1
 gpgcheck=1
 repo_gpgcheck=0
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+# c опцией repo_gpgcheck=1 скрипт выдает ошибку: repomd.xml signature could not be verified for kubernetes
 ```
 
 Если мы хотим скачивать только rpm пакеты из репозитория kubernetes, то конфиг будет такой:
