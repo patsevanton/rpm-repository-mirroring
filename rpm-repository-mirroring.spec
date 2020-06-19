@@ -1,8 +1,8 @@
 %global _prefix /usr/local
 
 Name:    rpm-repository-mirroring
-Version: 0.5
-Release: 5
+Version: 0.6
+Release: 1
 Summary: Script for download RPM
 Group:   Development Tools
 License: ASL 2.0

@@ -158,75 +158,76 @@ for repo in repo_ver:
 # Получение значения настроек.
 name_uni_count = get_name_uni_count(config)
 # Для каждого репозитория как индекса словаря.
-for repo in name_uni_count:
-	# Количество последних фиксируемых версий, полученное как значение от индекса.
-	# Не константа - изменяется, чтобы определить остановку в работе.
-	uni_tmp = name_uni_count[repo]
+if name_uni_count is not None:
+	for repo in name_uni_count:
+		# Количество последних фиксируемых версий, полученное как значение от индекса.
+		# Не константа - изменяется, чтобы определить остановку в работе.
+		uni_tmp = name_uni_count[repo]
 
-	# Необходимая инициализация для репозитория.
-	yb = yum.YumBase()
-	if not yb.setCacheDir():
-		print >>sys.stderr, "Can't create a tmp. cachedir. "
-		sys.exit(1)
-	# Уточнение конкретного ограничивающего имени.
-	yb.repos.disableRepo('*')
-	yb.repos.enableRepo(repo)
+		# Необходимая инициализация для репозитория.
+		yb = yum.YumBase()
+		if not yb.setCacheDir():
+			print >>sys.stderr, "Can't create a tmp. cachedir. "
+			sys.exit(1)
+		# Уточнение конкретного ограничивающего имени.
+		yb.repos.disableRepo('*')
+		yb.repos.enableRepo(repo)
 
-	# Создание каталога для сохранения, если не существует.
-	if not os.path.exists(download_dir + '/' + repo):
-		os.makedirs(download_dir + '/' + repo)
-	# Вычисление пути для специального временного каталога для скачки.
-	tmp = download_dir + '/' + repo + '/tmp'
-	# Создание этого каталога, если необходимо. Или очистка всех файлов внутри.
-	if not os.path.exists(tmp):
-		os.makedirs(tmp)
-	else:
-		files = glob.glob(tmp + '/*')
-		for f in files:
-			os.remove(f)
-	# Необходимая инициализация словаря.
-	repo_name_ver[repo] = {}
-	# Флаг для необходимого своевременного перехода к следующему имени при логическом забеге вперёд.
-	ignore = False
-	# Переменная для сохранения предыдущего имени пакета.
-	prev_name = None
-	# Итерация по отсортированным по свежести пакетам.
-	for pkg in sorted(yb.pkgSack.returnPackages(), reverse=True):
-		# Переместиться на следующую итерацию, если работается в рамках одного имени и надо игнорировать.
-		if ignore == True and prev_name == pkg.name:
-			continue
-		# Здесь уже пришло новое имя пакета и с ним надо начинать работать, а не игнорировать изначально.
-		if prev_name != pkg.name:
-			ignore = False
-
-		# Необходимые условия для yum-api чтобы гарантировать что пакет именно скачается.
-		pkg.repo.copy_local = True
-		pkg.repo.cache = 0
-
-		# Пока ещё есть глубина для работы.
-		if uni_tmp > 0:
-			# Проверяется, присутствует ли уже имя в словаре и внутренний словарь инициализируется.
-			if pkg.name not in repo_name_ver[repo]:
-				repo_name_ver[repo][pkg.name] = []
-			# Либо добавляется в набор необходимых версий для скачки.
-			repo_name_ver[repo][pkg.name].append(pkg.version + '-' + pkg.release)
-			# Текущее меньшение глубины.
-			uni_tmp -= 1
-			# Скачка файла.
-			save_po(pkg, repo)
-		# Достигнут лимит на отслеживаемые версии.
-		# Возможно их меньше присутствует в репозитории чем надо отследить.
-		# Интересоваться больше не имеет смысла.
-		# Надо игнорировать итерации вперёд в рамках одного имени, то есть переходить к следующему имени.
+		# Создание каталога для сохранения, если не существует.
+		if not os.path.exists(download_dir + '/' + repo):
+			os.makedirs(download_dir + '/' + repo)
+		# Вычисление пути для специального временного каталога для скачки.
+		tmp = download_dir + '/' + repo + '/tmp'
+		# Создание этого каталога, если необходимо. Или очистка всех файлов внутри.
+		if not os.path.exists(tmp):
+			os.makedirs(tmp)
 		else:
-			# Приведение переменной к первоначальному значению из конфига для последующих итераций.
-			uni_tmp = name_uni_count[repo]
-			ignore = True
-		# Запоминание имени пакета для следующей итерации для сравнения на идентичность чтобы игнорировать.
-		prev_name = pkg.name
-	process = subprocess.Popen("/usr/bin/createrepo --update {0}/{1}".format(download_dir, repo), shell=True, stdout=subprocess.PIPE)
-	output, error = process.communicate()
-	print(output)
+			files = glob.glob(tmp + '/*')
+			for f in files:
+				os.remove(f)
+		# Необходимая инициализация словаря.
+		repo_name_ver[repo] = {}
+		# Флаг для необходимого своевременного перехода к следующему имени при логическом забеге вперёд.
+		ignore = False
+		# Переменная для сохранения предыдущего имени пакета.
+		prev_name = None
+		# Итерация по отсортированным по свежести пакетам.
+		for pkg in sorted(yb.pkgSack.returnPackages(), reverse=True):
+			# Переместиться на следующую итерацию, если работается в рамках одного имени и надо игнорировать.
+			if ignore == True and prev_name == pkg.name:
+				continue
+			# Здесь уже пришло новое имя пакета и с ним надо начинать работать, а не игнорировать изначально.
+			if prev_name != pkg.name:
+				ignore = False
+
+			# Необходимые условия для yum-api чтобы гарантировать что пакет именно скачается.
+			pkg.repo.copy_local = True
+			pkg.repo.cache = 0
+
+			# Пока ещё есть глубина для работы.
+			if uni_tmp > 0:
+				# Проверяется, присутствует ли уже имя в словаре и внутренний словарь инициализируется.
+				if pkg.name not in repo_name_ver[repo]:
+					repo_name_ver[repo][pkg.name] = []
+				# Либо добавляется в набор необходимых версий для скачки.
+				repo_name_ver[repo][pkg.name].append(pkg.version + '-' + pkg.release)
+				# Текущее меньшение глубины.
+				uni_tmp -= 1
+				# Скачка файла.
+				save_po(pkg, repo)
+			# Достигнут лимит на отслеживаемые версии.
+			# Возможно их меньше присутствует в репозитории чем надо отследить.
+			# Интересоваться больше не имеет смысла.
+			# Надо игнорировать итерации вперёд в рамках одного имени, то есть переходить к следующему имени.
+			else:
+				# Приведение переменной к первоначальному значению из конфига для последующих итераций.
+				uni_tmp = name_uni_count[repo]
+				ignore = True
+			# Запоминание имени пакета для следующей итерации для сравнения на идентичность чтобы игнорировать.
+			prev_name = pkg.name
+		process = subprocess.Popen("/usr/bin/createrepo --update {0}/{1}".format(download_dir, repo), shell=True, stdout=subprocess.PIPE)
+		output, error = process.communicate()
+		print(output)
 
 
 # Более красивая распечатка словаря.
