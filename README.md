@@ -8,11 +8,11 @@ yum copr enable antonpatsev/rpm-repository-mirroring
 yum -y install rpm-repository-mirroring
 ```
 
-## Настройка rpm-repository-mirroring (пример с репозиторием grafana)
+## Настройка rpm-repository-mirroring
 Редактируем файл `/etc/rpm-repository-mirroring.conf`
 В нем все подробно описано.
 
-### Grafana
+### Репозиторий, с которого нужно скачать все последние rpm пакеты начиная с определенной версии. Пример Grafana
 
 Создадим /etc/yum.repos.d/grafana.repo со следующим содержимым:
 ```
@@ -43,7 +43,7 @@ rpm-repository-mirroring
 
 После запуска скрипта в директории /var/www/repos должна появится директория grafana, содержащая rpm репозиторий.
 
-### Kubernetes
+### Репозиторий, с которого нужно скачать все последние rpm пакеты начиная с определенной версии + N последних версий определенных rpm пакетов. Пример Kubernetes
 
 Создадим /etc/yum.repos.d/kubernetes.repo со следующим содержимым:
 
@@ -69,6 +69,28 @@ REPOS={"kubernetes":"1.17.6"}
 # Для всех репозиторией, в которых есть rpm-пакет, совпадающий с ключом, необходимо скачать последние N версии этих rpm пакетов.
 # Где N указываетя в значении.
 CUT_AFTER={"rkt":2,"kubernetes-cni":2,"cri-tools":2}
+```
+
+### Репозиторий, с которого нужно скачать N последних версий определенных rpm пакетов. Пример Prometheus
+
+Создадим /etc/yum.repos.d/prometheus.repo со следующим содержимым:
+```
+[prometheus]
+name=prometheus
+baseurl=https://packagecloud.io/prometheus-rpm/release/el/$releasever/$basearch
+repo_gpgcheck=1
+enabled=1
+gpgkey=https://packagecloud.io/prometheus-rpm/release/gpgkey
+       https://raw.githubusercontent.com/lest/prometheus-rpm/master/RPM-GPG-KEY-prometheus-rpm
+gpgcheck=1
+metadata_expire=300
+```
+
+Если мы хотим скачивать только rpm пакеты из репозитория kubernetes, то конфиг будет такой:
+```
+# Директория, в которых будут создаваться rpm репозитории
+DOWNLOAD_DIR=/var/www/repos
+
 ```
 
 Диаграмма для репо kubernetes и grafana
