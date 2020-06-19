@@ -27,7 +27,7 @@ sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 ```
 
-Например, если мы хотим скачивать только rpm пакеты из репозитория grafana, то конфиг будет такой:
+Конфиг /etc/rpm-repository-mirroring.conf:
 ```
 # Директория, в которых будут создаваться rpm репозитории
 DOWNLOAD_DIR=/var/www/repos
@@ -58,7 +58,7 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 # c опцией repo_gpgcheck=1 скрипт выдает ошибку: repomd.xml signature could not be verified for kubernetes
 ```
 
-Если мы хотим скачивать только rpm пакеты из репозитория kubernetes, то конфиг будет такой:
+Конфиг /etc/rpm-repository-mirroring.conf:
 ```
 # Директория, в которых будут создаваться rpm репозитории
 DOWNLOAD_DIR=/var/www/repos
@@ -86,11 +86,14 @@ gpgcheck=1
 metadata_expire=300
 ```
 
-Если мы хотим скачивать только rpm пакеты из репозитория kubernetes, то конфиг будет такой:
+Конфиг /etc/rpm-repository-mirroring.conf:
 ```
 # Директория, в которых будут создаваться rpm репозитории
 DOWNLOAD_DIR=/var/www/repos
 
+# ключ - репозиторий. значение: количество последних версий, которые необходимо скачать-для-всех-rpm-пакетов-в-репозитории.
+# Пример: Для репозитория prometheus-7 нужно скачать последние 4 версии rpm пакетов.
+#NUMBER_PACKAGE_IN_REPO={"prometheus-7":4}
 ```
 
 Диаграмма для репо kubernetes и grafana
